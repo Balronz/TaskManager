@@ -1,6 +1,6 @@
 //Importar bibliotecas
 import mongoose from "mongoose";
-import date from "date-and-time";
+import * as date from "date-and-time";
 import validator from "validator"; //Validador email
 import bcrypt from "bcryptjs"; //Encriptar contraseñas
 

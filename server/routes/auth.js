@@ -2,6 +2,7 @@
 
 import express from 'express';//Importar la librerira express
 import User from '../models/user.js';
+import generateToken from '../utils/generateToken.js';
 
 const router = express.Router();
 
@@ -20,10 +21,12 @@ router.post('/register', async (req, res) => {
         
         //Crear un nuevo usuario (para ejecutar el hash de contraseña)
         const user = new User({name, email, password});
-
         //Guardar el usuario en la BBDD
         await user.save(); 
-        
+
+        //Generar token
+        const token = generateToken({id: user._id, role: user.role});
+
         //Devolver estos datos excepto la contraseña
         res.json ({
             message: 'Usuario creado correctamente',
@@ -31,7 +34,8 @@ router.post('/register', async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                token
             }
         });
 
@@ -55,10 +59,8 @@ router.post('/login', async (req, res) => {
 
         //Verificar que usuario existe y contraseña es correcta
         const userExists = await User.findOne({email});
-        if(userExists) {
-            
-            return res.status(400).json({error: 'El usuario ya existe'});
-
+        if(!userExists) {
+            return res.status(400).json({error: 'usuario no encontrado'});
         }
 
         //Comprobar si la contraseña es valida
@@ -67,7 +69,8 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({error: 'La contraseña es incorrecta'});
         }
 
-        //Accion: Generar token (la funcion la importamos desde /middleware/authMiddleware.js)
+        //Accion: Generar token (la funcion la importamos desde utils/generateToken.js)
+        const token = generateToken({ id: User._id, role: User.role });
 
         res.status(200).json({
             message: 'Login correcto',
@@ -76,7 +79,8 @@ router.post('/login', async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role
-            }
+            },
+            token
         });
 
     } catch(err) {
