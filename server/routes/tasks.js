@@ -153,12 +153,8 @@ router.delete('/tasks/:id', authMiddleware, async(req, res) =>{
         ) {
             return res.status(401).json({error: 'No autorizado'});
         }
-
-        return res.status(200).json(task);
         await task.remove(); //Elimina la tarea
     } catch(err) {
         return res.status(500).json({error: err.message});
     }
-
-
 });
