@@ -2,7 +2,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import * as date from "date-and-time";
-import User from "./user";
+import User from "./user.js";
 
 //Crear la clase Task
 const taskSchema = new mongoose.Schema({

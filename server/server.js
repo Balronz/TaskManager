@@ -1,6 +1,7 @@
 import connectDB from "./config/db.js"; //Importar la conexion a la BBDD
 import express from "express"; //Importar express
 import auth from "./routes/auth.js";
+import tasks from "./routes/tasks.js";
 import dotenv from "dotenv";
 import errorMiddleware from "./middleware/errorMiddleware.js";
 
@@ -15,7 +16,9 @@ app.use(express.json());
 
 
 //Rutas
-app.use('/api/auth', auth, errorMiddleware);
+app.use('/api/auth', auth);
+app.use('/api/tasks', tasks);
+app.use(errorMiddleware);
 
 //Llamada al puerto
 app.listen(PORT, () => {
