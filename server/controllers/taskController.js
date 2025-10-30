@@ -4,7 +4,7 @@ import generateToken from "../utils/generateToken.js";
 
 //Mostrar listas de tareas
 
-const showAllTasks = async (req, res) => {
+export const showAllTasks = async (req, res) => {
     try{
 
         const { status } = req.query; //Obtener el filtro desde la query
@@ -40,7 +40,7 @@ const showAllTasks = async (req, res) => {
 
 //Devolver la tarea creada(201)
 
-const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
     try{
         //Lo que recibimos de la peticion post
         const { title, description, assignedTo } = req.body;
@@ -66,7 +66,7 @@ const createTask = async (req, res) => {
 
 //Devolver la tarea encontrada
 
-const displayTask = async (req, res) => {
+export const displayTask = async (req, res) => {
     
     try{
         const task = await Task.findById(req.params.id); //Buscamos la tarea por el ID
@@ -92,7 +92,7 @@ const displayTask = async (req, res) => {
 
 //Actualizar la tarea
 
-const updateTask = async (req, res) => {
+export const updateTask = async (req, res) => {
     //Lo que recibimos por la peticion post 
 
     try{
@@ -129,7 +129,7 @@ const updateTask = async (req, res) => {
 
 //Eliminar tarea
 
-const deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
     try{
         const task = await Task.findById(req.params.id); //Obtener la tarea por id
 

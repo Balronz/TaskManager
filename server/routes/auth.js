@@ -2,7 +2,6 @@
 
 import express from 'express';//Importar la librerira express
 import { registerUser, loginUser } from '../controllers/authController.js';
-import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -13,3 +12,4 @@ router.post('/register', registerUser);
 //API /api/auth/login
 router.post('/login', loginUser);
 
+export default router;
